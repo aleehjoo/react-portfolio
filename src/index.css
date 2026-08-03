@@ -6,20 +6,44 @@
  */
 @source not '../docs';
 
+/* The game's own faces. GAME2 is the dialogue text; GAME is the jagged one. */
+@font-face {
+  font-family: 'OMORI Dialogue';
+  src: url('./assets/fonts/OMORI_GAME2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OMORI Jagged';
+  src: url('./assets/fonts/OMORI_GAME.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /*
- * The whole site's color is these two variables. `[data-space='black']`
- * inverts them, which is why nothing below here may hardcode a color.
+ * The whole site's color is these variables. `[data-space='black']` inverts
+ * ink/void, which is why nothing below here may hardcode a color.
+ *
+ * --box-* stay constant on purpose: OMORI's dialogue and command windows are
+ * always black with white text, in both spaces.
  */
 :root {
   --ink: #000000;
   --void: #ffffff;
   --muted: #6f6f6f;
+  --blood: #cc2229;
+  --box-fill: #000000;
+  --box-ink: #ffffff;
 }
 
 [data-space='black'] {
   --ink: #ffffff;
   --void: #000000;
   --muted: #9a9a9a;
+  --blood: #ff2d2d;
 }
 
 /* `inline` is what lets theme values track runtime custom properties. */
@@ -27,7 +51,11 @@
   --color-ink: var(--ink);
   --color-void: var(--void);
   --color-muted: var(--muted);
-  --font-pixel: 'Pixelify Sans', ui-monospace, 'Courier New', monospace;
+  --color-blood: var(--blood);
+  --color-box: var(--box-fill);
+  --color-box-ink: var(--box-ink);
+  --font-hand: 'OMORI Dialogue', 'Segoe Print', 'Comic Sans MS', cursive;
+  --font-jagged: 'OMORI Jagged', 'OMORI Dialogue', 'Segoe Print', cursive;
 }
 
 @theme {
@@ -54,17 +82,23 @@ body {
   margin: 0;
 }
 
-/* Black Space: sparse stars, no DOM nodes and no JS. */
+/*
+ * Black Space: sparse stars, no DOM nodes and no JS. The third layer is a
+ * handful of red ones, rare enough to register as wrong rather than decorative.
+ */
 [data-space='black'] body {
   background-image:
     radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, transparent 1px),
-    radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+    radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 45, 45, 0.75) 1px, transparent 1px);
   background-size:
     220px 220px,
-    130px 130px;
+    130px 130px,
+    570px 610px;
   background-position:
     0 0,
-    70px 90px;
+    70px 90px,
+    210px 260px;
 }
 
 :focus-visible {
