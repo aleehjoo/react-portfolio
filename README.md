@@ -66,6 +66,26 @@ The clean fix is React Router 8, which requires Node >= 22.22.0. This project
 was built on Node 22.13.1, so npm resolved to the 7.x line instead. Upgrading
 Node and then running `npm install react-router@^8` clears the advisory.
 
+## Deployment
+
+Deployed on Vercel. `vercel.json` sets two things that the defaults get wrong
+for this project:
+
+- `outputDirectory: "dist"` — Vite builds to `dist`, but the project was
+  configured to look for `build`, so deploys failed with "No Output Directory
+  named build found" even though the build itself succeeded.
+- A catch-all rewrite to `/index.html`, so React Router's routes survive a
+  direct hit or a refresh. Without it, anything other than `/` would 404 at the
+  CDN before React ever loaded. Vercel matches real files first, so the hashed
+  assets, `sw.js` and the manifest are unaffected.
+
+## Assets
+
+`src/assets/` contains the OMORI game fonts (`OMORI_GAME2.ttf` for dialogue,
+`OMORI_GAME.ttf` for the jagged text) and the animated lightbulb. These are
+game assets, included here for a student coursework project — they are not
+covered by this repository's licence and should not be reused elsewhere.
+
 ## Docs
 
 - Design: `docs/superpowers/specs/2026-08-04-omori-portfolio-design.md`

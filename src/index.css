@@ -37,6 +37,12 @@
   --blood: #cc2229;
   --box-fill: #000000;
   --box-ink: #ffffff;
+
+  /* The bulb's own palette. --glass dims when the light goes out rather than
+     inverting to pure white, so an unlit bulb reads as dead instead of loud.
+     --filament is white in both spaces: bright on black glass, faint on grey. */
+  --glass: #000000;
+  --filament: #ffffff;
 }
 
 [data-space='black'] {
@@ -44,6 +50,7 @@
   --void: #000000;
   --muted: #9a9a9a;
   --blood: #ff2d2d;
+  --glass: #cfcfcf;
 }
 
 /* `inline` is what lets theme values track runtime custom properties. */

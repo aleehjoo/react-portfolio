@@ -1,28 +1,32 @@
 import { useSpace } from '../theme/useSpace'
+import bulb from '../assets/animated-lightbulb.gif'
+
+/*
+ * The bulb is the supplied 128x744 animated GIF, which already swings on its
+ * own — no CSS animation needed, and the cord is part of the same artwork so
+ * it can never mismatch the way a separate CSS cord did.
+ *
+ * Within that frame the bulb sits at y 565-731; everything above is cord. The
+ * image is anchored to the bottom of a shorter box, so the box height decides
+ * how much cord shows and the rest is clipped off the top — which reads as the
+ * cord carrying on upward, behind the navbar.
+ */
+const BULB_TOP = 565
+const FRAME = { w: 128, h: 744 }
 
 const VARIANTS = {
-  hero: { cord: 'h-20', bulb: 'h-32 w-28' },
-  nav: { cord: 'h-2', bulb: 'h-9 w-7' },
+  hero: { width: 115, height: 260 },
+  // absolute so the navbar's height stays fixed no matter the bulb
+  nav: { width: 30, height: 56, position: 'absolute left-0 top-0' },
 }
-
-// Short dashes radiating off the glass. Skipped near the top so they never
-// collide with the cord.
-const RAYS = [
-  'M22 116h12',
-  'M106 116h12',
-  'M27 86l9 7',
-  'M113 86l-9 7',
-  'M27 148l9-7',
-  'M113 148l-9-7',
-  'M70 170v9',
-  'M48 164l5-8',
-  'M92 164l-5-8',
-]
 
 export default function Lightbulb({ variant = 'hero' }) {
   const { space, toggleSpace } = useSpace()
   const lit = space === 'white'
-  const size = VARIANTS[variant]
+  const { width, height, position = '' } = VARIANTS[variant]
+
+  // How much of the box the bulb itself takes, so callers can reason about it.
+  const bulbHeight = Math.round(((FRAME.h - BULB_TOP) * width) / FRAME.w)
 
   return (
     <button
@@ -30,50 +34,26 @@ export default function Lightbulb({ variant = 'hero' }) {
       onClick={toggleSpace}
       aria-pressed={!lit}
       aria-label={lit ? 'Turn off the light' : 'Turn on the light'}
-      className="group flex cursor-pointer flex-col items-center border-0 bg-transparent p-0 text-ink"
+      title={lit ? 'Turn off the light' : 'Turn on the light'}
+      className={`group block cursor-pointer border-0 bg-transparent p-0 ${position}`}
+      style={{ width, height }}
     >
-      {/* the cord is plain CSS so its length can vary per variant */}
-      <span aria-hidden="true" className={`w-[3px] bg-ink ${size.cord}`} />
-      <svg
+      <span
         aria-hidden="true"
-        viewBox="0 0 140 182"
-        className={`${size.bulb} transition-transform duration-200 group-hover:translate-y-1`}
-        fill="none"
-        stroke="currentColor"
-      >
-        {/* the last stretch of cord, meeting the base */}
-        <path d="M70 0v52" strokeWidth="3" />
-
-        {/* screw base, with threads knocked out of it */}
-        <rect x="60" y="50" width="20" height="30" fill="currentColor" />
-        <g stroke="var(--void)" strokeWidth="2.5">
-          <path d="M61 58h18" />
-          <path d="M61 66h18" />
-          <path d="M61 74h18" />
-        </g>
-
-        {/* glass */}
-        <path
-          d="M60 76C60 88 42 96 42 116C42 140 54 156 70 156C86 156 98 140 98 116C98 96 80 88 80 76Z"
-          fill="currentColor"
-        />
-
-        {/* filament — the one place red shows up while the light is out */}
-        <path
-          d="M63 96C63 106 77 105 77 114C77 123 63 122 63 131C63 138 69 141 74 138"
-          stroke={lit ? 'var(--void)' : 'var(--blood)'}
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-
-        {lit && (
-          <g strokeWidth="3" strokeLinecap="round">
-            {RAYS.map((d) => (
-              <path key={d} d={d} />
-            ))}
-          </g>
-        )}
-      </svg>
+        data-bulb-height={bulbHeight}
+        className={`block bg-bottom bg-no-repeat transition-transform duration-200 group-hover:scale-105 ${
+          // the artwork is drawn for White Space; Black Space inverts it to the
+          // dim grey of a bulb that has gone out, not a glaring white one
+          lit ? '' : '[filter:invert(1)_brightness(0.82)]'
+        }`}
+        style={{
+          width,
+          height,
+          backgroundImage: `url(${bulb})`,
+          backgroundSize: `${width}px auto`,
+          transformOrigin: 'top center',
+        }}
+      />
     </button>
   )
 }

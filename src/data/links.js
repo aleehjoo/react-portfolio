@@ -1,5 +1,10 @@
 export const contactLinks = [
   {
+    label: 'GITHUB',
+    href: 'https://github.com/aleehjoo/',
+    external: true,
+  },
+  {
     label: 'LINKEDIN',
     href: 'https://www.linkedin.com/in/alejandro-umila-a33756349/',
     external: true,
