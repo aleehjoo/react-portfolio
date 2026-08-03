@@ -1,6 +1,12 @@
 @import 'tailwindcss';
 
 /*
+ * Tailwind v4 scans the whole project by default, which means the class names
+ * quoted in the design docs would end up in the bundle. Only src/ is real.
+ */
+@source not '../docs';
+
+/*
  * The whole site's color is these two variables. `[data-space='black']`
  * inverts them, which is why nothing below here may hardcode a color.
  */
