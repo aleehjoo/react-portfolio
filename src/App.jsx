@@ -1,10 +1,18 @@
+import { useRef } from 'react'
 import NavBar from './components/NavBar'
+import Lightbulb from './components/Lightbulb'
 import Hero from './sections/Hero'
 import AboutMe from './sections/AboutMe'
 import Projects from './sections/Projects'
 import ContactMe from './sections/ContactMe'
+import { useScrolledPast } from './hooks/useScrolledPast'
 
 export default function App() {
+  const heroBulbRef = useRef(null)
+  // Hand over to the fixed bulb only once the hero one is gone, so there is
+  // never more than one on screen.
+  const heroBulbGone = useScrolledPast(heroBulbRef)
+
   return (
     <div
       id="top"
@@ -12,8 +20,17 @@ export default function App() {
     >
       <NavBar />
 
+      <div
+        className={`transition-opacity duration-300 ${
+          heroBulbGone ? 'opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+        aria-hidden={!heroBulbGone}
+      >
+        <Lightbulb variant="side" />
+      </div>
+
       <main className="mx-auto w-full max-w-4xl">
-        <Hero />
+        <Hero bulbRef={heroBulbRef} />
         <AboutMe />
         <Projects />
         <ContactMe />

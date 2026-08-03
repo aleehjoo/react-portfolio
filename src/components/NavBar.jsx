@@ -1,4 +1,3 @@
-import Lightbulb from './Lightbulb'
 import { SECTIONS } from '../data/sections'
 
 export default function NavBar() {
@@ -12,28 +11,17 @@ export default function NavBar() {
           ALEJANDRO UMILA
         </a>
 
-        <div className="flex items-center gap-4 sm:gap-7">
-          <nav aria-label="Sections" className="flex items-center gap-4 sm:gap-7">
-            {SECTIONS.map((section) => (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className="text-xs text-ink no-underline hover:text-blood sm:text-sm"
-              >
-                {section.label}
-              </a>
-            ))}
-          </nav>
-
-          {/*
-            Fixed-size well: the bulb is absolutely positioned inside it and
-            hangs off the header's top edge, so it can't change the 64px height
-            that the hero's min-height calculation depends on.
-          */}
-          <div className="relative h-full w-[30px]">
-            <Lightbulb variant="nav" />
-          </div>
-        </div>
+        <nav aria-label="Sections" className="flex items-center gap-4 sm:gap-7">
+          {SECTIONS.map((section) => (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              className="text-xs text-ink no-underline hover:text-blood sm:text-sm"
+            >
+              {section.label}
+            </a>
+          ))}
+        </nav>
       </div>
     </header>
   )

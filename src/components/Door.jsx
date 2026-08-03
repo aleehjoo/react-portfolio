@@ -1,7 +1,7 @@
 /*
  * A door, drawn rather than built from borders. Divs gave a plain thick
  * rectangle; this gets the thinner outline, the lintel across the top, the
- * two hinges on the jamb and the small square handle.
+ * two square hinges on the jamb and the small handle.
  */
 export default function Door({ className = '' }) {
   return (
@@ -15,13 +15,13 @@ export default function Door({ className = '' }) {
     >
       {/* leaf */}
       <rect x="10" y="6" width="42" height="78" fill="var(--void)" />
-      {/* lintel */}
-      <path d="M10 14h42" />
-      {/* hinges, straddling the jamb */}
-      <rect x="6" y="28" width="8" height="11" fill="var(--void)" />
-      <rect x="6" y="55" width="8" height="11" fill="var(--void)" />
+      {/* lintel, sitting close under the top edge */}
+      <path d="M10 11h42" />
+      {/* hinges — two small squares straddling the jamb, not long bars */}
+      <rect x="7" y="28" width="6" height="6" fill="var(--void)" />
+      <rect x="7" y="56" width="6" height="6" fill="var(--void)" />
       {/* handle */}
-      <rect x="41" y="46" width="6" height="6" fill="var(--void)" />
+      <rect x="42" y="47" width="5" height="5" fill="var(--void)" />
     </svg>
   )
 }

@@ -9,27 +9,29 @@ import bulb from '../assets/animated-lightbulb.gif'
  * Within that frame the bulb sits at y 565-731; everything above is cord. The
  * image is anchored to the bottom of a shorter box, so the box height decides
  * how much cord shows and the rest is clipped off the top — which reads as the
- * cord carrying on upward, behind the navbar.
+ * cord carrying on upward, out of view.
  */
 const BULB_TOP = 565
 const FRAME = { w: 128, h: 744 }
 
 const VARIANTS = {
   hero: { width: 115, height: 260 },
-  // absolute so the navbar's height stays fixed no matter the bulb
-  nav: { width: 30, height: 56, position: 'absolute left-0 top-0' },
+  // Hangs from the top of the viewport at the right edge, behind the navbar
+  // (z-10 against the navbar's z-20) so its cord disappears under the bar
+  // rather than starting at it.
+  side: { width: 46, height: 190, position: 'fixed right-6 top-0 z-10 sm:right-10' },
 }
 
-export default function Lightbulb({ variant = 'hero' }) {
+export default function Lightbulb({ variant = 'hero', ref }) {
   const { space, toggleSpace } = useSpace()
   const lit = space === 'white'
   const { width, height, position = '' } = VARIANTS[variant]
 
-  // How much of the box the bulb itself takes, so callers can reason about it.
   const bulbHeight = Math.round(((FRAME.h - BULB_TOP) * width) / FRAME.w)
 
   return (
     <button
+      ref={ref}
       type="button"
       onClick={toggleSpace}
       aria-pressed={!lit}
