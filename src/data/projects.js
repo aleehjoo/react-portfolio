@@ -18,10 +18,10 @@ export const projects = [
     id: 'apo-idon-inventory',
     title: 'APO IDON INVENTORY',
     description:
-      'PLACEHOLDER — the repository is private, so this description and its tags still need writing. Replace them in src/data/projects.js.',
-    tags: ['TBD'],
+      'Role-based stock system for a business that had been counting by hand. Admins and submitters get separate views behind invite-only auth, stock movements apply as atomic deltas so two people counting at once cannot corrupt a total, and item photos are attached per entry. Access is enforced in Postgres itself with row-level security rather than trusted to the UI.',
+    tags: ['NEXT.JS', 'TYPESCRIPT', 'SUPABASE', 'SHADCN/UI'],
     image: shotTwo,
-    href: null,
+    href: 'https://github.com/aleehjoo/apo-idon-inventory',
   },
   {
     id: 'travel-agency',

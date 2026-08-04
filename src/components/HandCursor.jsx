@@ -12,6 +12,9 @@ import pointer from '../assets/finger-pointer.gif'
  * transparent padding is pulled back in with negative margins, which shift
  * layout without ever clipping the image.
  */
+// The right margin is -10px rather than -24px: at full extension the
+// fingertip reaches further right than it does at rest, and was touching
+// the label.
 const HEIGHT = 22
 
 export default function HandCursor({ className = '' }) {
@@ -21,7 +24,7 @@ export default function HandCursor({ className = '' }) {
       alt=""
       aria-hidden="true"
       style={{ height: `${HEIGHT}px` }}
-      className={`ml-[-14px] mr-[-24px] w-auto max-w-none shrink-0 ${className}`}
+      className={`ml-[-14px] mr-[-10px] w-auto max-w-none shrink-0 ${className}`}
     />
   )
 }

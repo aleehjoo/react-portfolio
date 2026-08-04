@@ -14,7 +14,7 @@ export default function Hero({ bulbRef }) {
             ALEJANDRO UMILA
           </h1>
           <p className="mt-4 text-base tracking-[0.1em] text-muted">
-            SOMETHING...
+            WAITING FOR SOMETHING TO HAPPEN?
           </p>
         </div>
         <DoorNav />

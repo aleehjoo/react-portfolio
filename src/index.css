@@ -38,6 +38,12 @@
   --box-fill: #000000;
   --box-ink: #ffffff;
 
+  /* Battle-UI colours. Fixed in both spaces, like the dialogue window —
+     OMORI's HUD does not invert when the lights go out. */
+  --panel: #f2f2f2;
+  --hp: #e0343c;
+  --mp: #35b6c4;
+
   /* The bulb's own palette. --glass dims when the light goes out rather than
      inverting to pure white, so an unlit bulb reads as dead instead of loud.
      --filament is white in both spaces: bright on black glass, faint on grey. */
@@ -61,6 +67,9 @@
   --color-blood: var(--blood);
   --color-box: var(--box-fill);
   --color-box-ink: var(--box-ink);
+  --color-panel: var(--panel);
+  --color-hp: var(--hp);
+  --color-mp: var(--mp);
   --font-hand: 'OMORI Dialogue', 'Segoe Print', 'Comic Sans MS', cursive;
   --font-jagged: 'OMORI Jagged', 'OMORI Dialogue', 'Segoe Print', cursive;
 }
@@ -101,13 +110,17 @@
     }
   }
 
-  /* the slashes drawing themselves on */
-  @keyframes slash {
+  /* each letter landing as the dialogue types itself out */
+  --animate-char-in: char-in 0.16s ease-out both;
+
+  @keyframes char-in {
     from {
-      stroke-dashoffset: 120;
+      opacity: 0;
+      transform: translateY(3px);
     }
     to {
-      stroke-dashoffset: 0;
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
