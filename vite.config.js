@@ -10,7 +10,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg'],
+      includeAssets: ['favicon-32.png', 'favicon-180.png'],
       workbox: {
         // Fonts and the bulb are part of the look, so they belong offline.
         globPatterns: [
