@@ -20,9 +20,20 @@ export default function App() {
     >
       <NavBar />
 
+      {/*
+        Lowered into place rather than popped in: it slides down from behind
+        the navbar as it fades, which suits something hanging on a cord.
+        z-10 against the navbar's z-20 keeps the cord running up behind it.
+
+        Transitioning `translate` rather than `transform`: Tailwind v4's
+        translate utilities set the standalone CSS property, so naming
+        `transform` here would let the slide snap instead of ease.
+      */}
       <div
-        className={`transition-opacity duration-300 ${
-          heroBulbGone ? 'opacity-100' : 'pointer-events-none opacity-0'
+        className={`fixed right-6 top-0 z-10 transition-[opacity,translate] duration-700 ease-out sm:right-10 ${
+          heroBulbGone
+            ? 'translate-y-0 opacity-100'
+            : 'pointer-events-none -translate-y-10 opacity-0'
         }`}
         aria-hidden={!heroBulbGone}
       >

@@ -1,5 +1,5 @@
 import SectionHeading from '../components/SectionHeading'
-import Placeholder from '../components/Placeholder'
+import Portrait from '../components/Portrait'
 import DialogueBox from '../components/DialogueBox'
 
 const BIO = `PLACEHOLDER BIO.
@@ -11,7 +11,7 @@ export default function AboutMe() {
     <section id="about-me" className="scroll-mt-20 px-6 py-24">
       <SectionHeading title="ABOUT ME" flavor="A FACE IN THE WHITE." />
       <div className="grid gap-8 sm:grid-cols-[10rem_1fr] sm:items-start">
-        <Placeholder label="[ PHOTO ]" className="mx-auto aspect-square w-40" />
+        <Portrait />
         <DialogueBox text={BIO} />
       </div>
     </section>

@@ -16,10 +16,10 @@ const FRAME = { w: 128, h: 744 }
 
 const VARIANTS = {
   hero: { width: 115, height: 260 },
-  // Hangs from the top of the viewport at the right edge, behind the navbar
-  // (z-10 against the navbar's z-20) so its cord disappears under the bar
-  // rather than starting at it.
-  side: { width: 46, height: 190, position: 'fixed right-6 top-0 z-10 sm:right-10' },
+  // Positioning lives on the wrapper in App: a transform on an ancestor turns
+  // a fixed child into an absolute one, so the fade/slide has to be applied to
+  // the fixed element itself rather than to a box around it.
+  side: { width: 46, height: 190 },
 }
 
 export default function Lightbulb({ variant = 'hero', ref }) {
