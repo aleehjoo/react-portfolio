@@ -82,11 +82,7 @@ for this project:
 ## Assets
 
 `src/assets/` contains the OMORI game fonts (`OMORI_GAME2.ttf` for dialogue,
-`OMORI_GAME.ttf` for the jagged text) and the animated lightbulb. These are
-game assets, included here for a student coursework project — they are not
-covered by this repository's licence and should not be reused elsewhere.
-
-## Docs
-
-- Design: `docs/superpowers/specs/2026-08-04-omori-portfolio-design.md`
-- Plan: `docs/superpowers/plans/2026-08-04-omori-portfolio.md`
+`OMORI_GAME.ttf` for the jagged text), the animated lightbulb, the pointing
+hand and the red-hands animation. These are game assets, included here for a
+student coursework project — they are not covered by this repository's licence
+and should not be reused elsewhere.
