@@ -13,6 +13,7 @@ export default function Projects() {
             title={project.title}
             description={project.description}
             tags={project.tags}
+            image={project.image}
             href={project.href}
           />
         ))}

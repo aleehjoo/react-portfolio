@@ -1,28 +1,35 @@
-// `href` is the link the screenshot opens. Leave it null until you have a real
-// URL — the card still renders, the screenshot just isn't clickable yet.
+import shotOne from '../assets/project1.png'
+import shotTwo from '../assets/project2.png'
+import shotThree from '../assets/project3.png'
+
+// `href` is the link the screenshot opens. Leave it null when there is no
+// public URL — the card still renders, the screenshot just isn't clickable.
 export const projects = [
   {
-    id: 'project-one',
-    title: 'PROJECT ONE',
+    id: 'jd-gym',
+    title: "JD'S MUSCLE FLEX GYM",
     description:
-      'Placeholder description. Replace with what this project does and what you learned building it.',
-    tags: ['REACT', 'VITE'],
+      "Landing page for a gym in Tiaong, Quezon. A single scrolling marketing site with animated sections and a smoothie menu; there is no online payment, so the membership calls to action hand off to the gym's Facebook page, which is where sign-ups actually happen.",
+    tags: ['REACT', 'VITE', 'TAILWIND', 'FRAMER MOTION'],
+    image: shotOne,
+    href: 'https://github.com/aleehjoo/jd-gym',
+  },
+  {
+    id: 'apo-idon-inventory',
+    title: 'APO IDON INVENTORY',
+    description:
+      'PLACEHOLDER — the repository is private, so this description and its tags still need writing. Replace them in src/data/projects.js.',
+    tags: ['TBD'],
+    image: shotTwo,
     href: null,
   },
   {
-    id: 'project-two',
-    title: 'PROJECT TWO',
+    id: 'travel-agency',
+    title: 'TRAVEL AGENCY',
     description:
-      'Placeholder description. Replace with what this project does and what you learned building it.',
-    tags: ['JAVASCRIPT', 'API'],
-    href: null,
-  },
-  {
-    id: 'project-three',
-    title: 'PROJECT THREE',
-    description:
-      'Placeholder description. Replace with what this project does and what you learned building it.',
-    tags: ['TAILWIND', 'UI'],
-    href: null,
+      'Server-rendered travel agency dashboard built on React Router 7 in framework mode. Appwrite handles auth and data, Syncfusion supplies the grids, charts and maps, the Gemini API generates trip itineraries, and the whole thing ships in a Docker image with Sentry wired up for error tracking.',
+    tags: ['REACT ROUTER', 'TYPESCRIPT', 'APPWRITE', 'GEMINI'],
+    image: shotThree,
+    href: 'https://github.com/aleehjoo/travel-agency',
   },
 ]

@@ -150,11 +150,17 @@ body {
     scroll-behavior: auto;
   }
 
+  /*
+   * Keyframed and looping motion is stopped outright. Transitions are left
+   * alone on purpose: blanket-killing them made every fade snap, which is its
+   * own kind of jarring — things appeared out of nowhere rather than calmly.
+   * Components drop the *movement* half individually with Tailwind's
+   * `motion-reduce:` variants, so they still fade, they just don't travel.
+   */
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
   }
 }

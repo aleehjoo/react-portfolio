@@ -38,7 +38,7 @@ export default function App() {
         className={`fixed right-6 top-0 z-10 transition-[opacity,translate] [transition-duration:250ms,900ms] [transition-timing-function:ease-out,cubic-bezier(.22,1.15,.36,1)] sm:right-10 ${
           heroBulbGone
             ? 'translate-y-0 opacity-100'
-            : 'pointer-events-none -translate-y-full opacity-0'
+            : 'pointer-events-none -translate-y-full opacity-0 motion-reduce:translate-y-0'
         }`}
         aria-hidden={!heroBulbGone}
       >

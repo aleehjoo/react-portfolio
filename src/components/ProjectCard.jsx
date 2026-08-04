@@ -1,7 +1,17 @@
 import Placeholder from './Placeholder'
 
-export default function ProjectCard({ title, description, tags, href }) {
-  const screenshot = (
+export default function ProjectCard({ title, description, tags, image, href }) {
+  const screenshot = image ? (
+    <img
+      src={image}
+      alt={`${title} screenshot`}
+      /* lazy: the screenshots are the heaviest thing on the page and the
+         section sits well below the fold */
+      loading="lazy"
+      decoding="async"
+      className="aspect-4/3 w-full border-2 border-ink object-cover"
+    />
+  ) : (
     <Placeholder label="[ SCREENSHOT ]" className="aspect-4/3 w-full" />
   )
 

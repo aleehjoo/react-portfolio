@@ -16,9 +16,14 @@ export default defineConfig({
         globPatterns: [
           '**/*.{js,css,html,ico,png,svg,webp,woff,woff2,ttf,gif}',
         ],
-        // ...but not the 1.5MB attack GIF. It is only mounted on hover, and
-        // precaching it would make every visitor pay for it regardless.
-        globIgnores: ['**/Red_hands_attack-*'],
+        // ...but not the heavy stuff. The attack GIF is only mounted on hover
+        // and the screenshots are lazy-loaded below the fold; precaching them
+        // would make every visitor pay for all of it up front.
+        globIgnores: [
+          '**/Red_hands_attack-*',
+          '**/project1-*',
+          '**/project3-*',
+        ],
       },
       manifest: {
         name: 'Alejandro Umila — Portfolio',

@@ -17,9 +17,11 @@ export default function Door({ className = '' }) {
       <rect x="10" y="6" width="42" height="78" fill="var(--void)" />
       {/* lintel, sitting close under the top edge */}
       <path d="M10 11h42" />
-      {/* hinges — two small squares straddling the jamb, not long bars */}
-      <rect x="7" y="28" width="6" height="6" fill="var(--void)" />
-      <rect x="7" y="56" width="6" height="6" fill="var(--void)" />
+      {/* hinges — upright rectangles split across the middle, on the jamb */}
+      <rect x="7" y="26" width="6" height="12" fill="var(--void)" />
+      <path d="M7 32h6" />
+      <rect x="7" y="53" width="6" height="12" fill="var(--void)" />
+      <path d="M7 59h6" />
       {/* handle */}
       <rect x="42" y="47" width="5" height="5" fill="var(--void)" />
     </svg>
