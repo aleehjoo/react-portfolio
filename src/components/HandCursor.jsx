@@ -1,19 +1,28 @@
+import pointer from '../assets/finger-pointer.gif'
+
 /*
- * The menu cursor, drawn rather than typed. The OMORI faces have no ☞ glyph,
- * so a text cursor would fall back to a system font — and render as a colour
- * emoji on some platforms.
+ * The menu cursor. The GIF is 800x200 but the hand only occupies x 202-549,
+ * y 9-176 — the rest is padding, which would push the cursor miles off the
+ * label. So the frame is scaled and offset to show just that content box.
  */
+const FRAME = { w: 800, h: 200 }
+const CONTENT = { x: 202, y: 9, w: 348, h: 168 }
+const HEIGHT = 17
+
+const scale = HEIGHT / CONTENT.h
+
 export default function HandCursor({ className = '' }) {
   return (
-    <svg
+    <span
       aria-hidden="true"
-      viewBox="0 0 14 10"
-      className={`w-4 shrink-0 ${className}`}
-      fill="currentColor"
-    >
-      <rect x="0" y="2" width="2" height="6" />
-      <rect x="3" y="2" width="5" height="6" />
-      <rect x="7" y="4" width="6" height="2" />
-    </svg>
+      className={`block shrink-0 bg-no-repeat ${className}`}
+      style={{
+        width: `${CONTENT.w * scale}px`,
+        height: `${HEIGHT}px`,
+        backgroundImage: `url(${pointer})`,
+        backgroundSize: `${FRAME.w * scale}px ${FRAME.h * scale}px`,
+        backgroundPosition: `${-CONTENT.x * scale}px ${-CONTENT.y * scale}px`,
+      }}
+    />
   )
 }

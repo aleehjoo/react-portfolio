@@ -11,6 +11,15 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
+      workbox: {
+        // Fonts and the bulb are part of the look, so they belong offline.
+        globPatterns: [
+          '**/*.{js,css,html,ico,png,svg,webp,woff,woff2,ttf,gif}',
+        ],
+        // ...but not the 1.5MB attack GIF. It is only mounted on hover, and
+        // precaching it would make every visitor pay for it regardless.
+        globIgnores: ['**/Red_hands_attack-*'],
+      },
       manifest: {
         name: 'Alejandro Umila — Portfolio',
         short_name: 'PORTFOLIO',
