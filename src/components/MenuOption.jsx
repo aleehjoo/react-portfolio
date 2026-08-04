@@ -15,7 +15,7 @@ export default function MenuOption({ label, href, external }) {
         className="group flex items-center px-4 py-2 text-box-ink no-underline"
       >
         {/* Driven by :hover / :focus-visible, so no JS state. */}
-        <HandCursor className="opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100" />
+        <HandCursor className="ml-[-14px] mr-[-10px] opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100" />
         <span className="text-lg transition-transform duration-150 group-hover:translate-x-1 group-focus-visible:translate-x-1">
           {label}
         </span>

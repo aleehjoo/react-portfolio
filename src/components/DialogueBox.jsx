@@ -1,6 +1,25 @@
 import { useInView } from '../hooks/useInView'
 import { useTypewriter } from '../hooks/useTypewriter'
-import ContinueArrow from './ContinueArrow'
+import HandCursor from './HandCursor'
+
+/*
+ * Splits the revealed text into words and the whitespace between them, so
+ * each word can be kept on one line.
+ *
+ * Animating per character means every character is its own inline-block, and
+ * a line can break between any two of them — which was chopping words in half
+ * mid-word. Wrapping each word in a nowrap box confines breaks to the spaces.
+ * `index` keeps each character's key stable as more of them arrive.
+ */
+function splitIntoWords(text) {
+  const tokens = []
+  let index = 0
+  for (const token of text.split(/(\s+)/)) {
+    if (token) tokens.push({ token, index, space: /^\s+$/.test(token) })
+    index += token.length
+  }
+  return tokens
+}
 
 export default function DialogueBox({ speaker, text, cycle = 0, onAdvance }) {
   const [ref, inView] = useInView({ threshold: 0.4 })
@@ -21,27 +40,40 @@ export default function DialogueBox({ speaker, text, cycle = 0, onAdvance }) {
         {/*
           The animated copy is hidden from assistive tech and the complete text
           exposed beside it, so the effect never delays or garbles a screen
-          reader. Each character is its own span so it can land individually,
-          the way the game types; keying them by cycle restarts the animation
-          when the line changes rather than reusing the previous spans.
+          reader. Keying the characters by cycle restarts the animation when
+          the line changes instead of reusing the previous spans.
         */}
         <p
           aria-hidden="true"
           className="min-h-32 whitespace-pre-wrap pt-2 text-left text-lg leading-relaxed text-box-ink"
         >
-          {typed.split('').map((char, i) => (
-            <span
-              key={`${cycle}-${i}`}
-              className="inline-block whitespace-pre animate-char-in"
-            >
-              {char}
-            </span>
-          ))}
+          {splitIntoWords(typed).map(({ token, index, space }) =>
+            space ? (
+              token
+            ) : (
+              <span
+                key={`${cycle}-w${index}`}
+                className="inline-block whitespace-nowrap"
+              >
+                {token.split('').map((char, i) => (
+                  <span
+                    key={`${cycle}-${index + i}`}
+                    className="inline-block animate-char-in"
+                  >
+                    {char}
+                  </span>
+                ))}
+              </span>
+            ),
+          )}
         </p>
         <p className="sr-only">{text}</p>
 
         {done && (
-          <ContinueArrow className="absolute bottom-3 right-4 animate-blink text-box-ink" />
+          <HandCursor
+            height={18}
+            className="absolute bottom-1 right-0 animate-blink"
+          />
         )}
       </Wrapper>
     </div>
@@ -50,7 +82,7 @@ export default function DialogueBox({ speaker, text, cycle = 0, onAdvance }) {
 
 function Wrapper({ interactive, onAdvance, children }) {
   const shell =
-    'relative block w-full border-4 border-box-ink bg-box px-6 py-5 text-left outline outline-[3px] outline-box'
+    'relative block w-full overflow-hidden border-4 border-box-ink bg-box px-6 py-5 text-left outline outline-[3px] outline-box'
 
   if (!interactive) return <div className={shell}>{children}</div>
 

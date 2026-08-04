@@ -5,7 +5,10 @@ import { useSpace } from '../theme/useSpace'
 
 /*
  * The portrait, dressed as an OMORI battle panel: emotion plate on top, the
- * face over a halftone field, HP and MP underneath.
+ * face over a halftone field, HP and MP beneath.
+ *
+ * Everything here is drawn rather than sprited, so it stays sharp at any size
+ * instead of being a scaled screenshot.
  *
  * Hovering plays the red hands over the face. Two things make that work:
  *
@@ -15,6 +18,14 @@ import { useSpace } from '../theme/useSpace'
  *   as a Blob and a new object URL is minted per hover, which forces a fresh
  *   decode from frame one without going back to the network.
  */
+
+// The game renders each emotion in its own face and colour — NEUTRAL in the
+// plain lettering, AFRAID in the jagged one.
+const EMOTIONS = {
+  white: { label: 'NEUTRAL', className: 'font-hand text-white' },
+  black: { label: 'AFRAID', className: 'font-jagged text-[#9a9a9a]' },
+}
+
 export default function Portrait() {
   const { space } = useSpace()
   const [attackUrl, setAttackUrl] = useState(null)
@@ -44,15 +55,19 @@ export default function Portrait() {
 
   useEffect(() => release, [release])
 
+  const emotion = EMOTIONS[space]
+
   return (
     <div
-      className="group mx-auto w-44 border-4 border-ink bg-panel p-1.5"
+      className="group mx-auto w-44 select-none border-2 border-[#b8b8b8] bg-panel p-2 shadow-[inset_0_0_0_2px_#ffffff]"
       onMouseEnter={strike}
       onMouseLeave={stop}
     >
       {/* emotion plate */}
-      <p className="mb-1.5 border-2 border-black bg-white py-0.5 text-center text-sm tracking-[0.1em] text-black">
-        {space === 'white' ? 'NEUTRAL' : 'AFRAID'}
+      <p
+        className={`mb-2 border-2 border-black bg-black py-0.5 text-center text-sm tracking-[0.08em] ${emotion.className}`}
+      >
+        {emotion.label}
       </p>
 
       {/* face, over the halftone field */}
@@ -62,7 +77,7 @@ export default function Portrait() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-              'radial-gradient(circle, rgba(0,0,0,0.28) 1px, transparent 1px)',
+              'radial-gradient(circle, rgba(0,0,0,0.26) 1px, transparent 1px)',
             backgroundSize: '5px 5px',
           }}
         />
@@ -83,26 +98,40 @@ export default function Portrait() {
       </div>
 
       {/* stats */}
-      <div className="mt-1.5 space-y-1">
-        <StatBar label="♥" value="120/120" fill="bg-hp" width="100%" />
-        <StatBar label="◆" value="73/73" fill="bg-mp" width="100%" />
+      <div className="mt-2 space-y-1.5">
+        <StatBar icon={<Heart />} fill="bg-hp" value="120/120" />
+        <StatBar icon={<Droplet />} fill="bg-mp" value="73/73" />
       </div>
     </div>
   )
 }
 
-function StatBar({ label, value, fill, width }) {
+function StatBar({ icon, fill, value }) {
   return (
     <div className="flex items-center gap-1">
-      <span aria-hidden="true" className="text-sm leading-none text-black">
-        {label}
-      </span>
-      <span className="relative h-4 flex-1 overflow-hidden rounded-full border-2 border-black bg-white">
-        <span className={`absolute inset-y-0 left-0 ${fill}`} style={{ width }} />
-        <span className="absolute inset-0 flex items-center justify-center text-xs leading-none text-white">
+      {icon}
+      <span className="relative h-[13px] flex-1 overflow-hidden rounded-full border-2 border-black bg-black">
+        <span className={`absolute inset-0 rounded-full ${fill}`} />
+        <span className="absolute inset-0 flex items-center justify-center font-hand text-[10px] leading-none text-white">
           {value}
         </span>
       </span>
     </div>
+  )
+}
+
+function Heart() {
+  return (
+    <svg viewBox="0 0 16 15" className="w-3.5 shrink-0 text-hp" fill="currentColor">
+      <path d="M8 14.5S.8 9.6.8 5.3A4.1 4.1 0 0 1 8 2.7a4.1 4.1 0 0 1 7.2 2.6C15.2 9.6 8 14.5 8 14.5Z" />
+    </svg>
+  )
+}
+
+function Droplet() {
+  return (
+    <svg viewBox="0 0 16 15" className="w-3.5 shrink-0 text-mp" fill="currentColor">
+      <path d="M8 .8s5.4 6 5.4 9.1a5.4 5.4 0 0 1-10.8 0C2.6 6.8 8 .8 8 .8Z" />
+    </svg>
   )
 }
